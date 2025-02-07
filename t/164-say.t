@@ -109,3 +109,25 @@ GET /lua
 GET /lua
 --- response_body
 1.844674407371e+19
+
+
+
+=== TEST 8: ngx.say http1.0
+--- http_config
+    server {
+        listen  8111;
+        location / {
+            return 200 "access success";
+        }
+    }
+--- config
+    location /lua {
+        content_by_lua_block {
+            ngx.say("Http1.0")
+        }
+        proxy_pass       http://127.0.0.1:8111;
+    }
+--- request
+GET /lua HTTP/1.0
+--- response_body
+Http1.0

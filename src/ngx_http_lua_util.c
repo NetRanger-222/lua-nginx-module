@@ -581,6 +581,7 @@ ngx_http_lua_send_chain_link(ngx_http_request_t *r, ngx_http_lua_ctx_t *ctx,
     llcf = ngx_http_get_module_loc_conf(r, ngx_http_lua_module);
 
     if (llcf->http10_buffering
+        && !ctx->ngx_say_no_buffer
         && !ctx->buffering
         && !r->header_sent
         && !ctx->header_sent

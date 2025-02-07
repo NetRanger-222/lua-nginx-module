@@ -237,7 +237,9 @@ ngx_http_lua_ngx_echo(lua_State *L, unsigned newline)
     ngx_log_debug0(NGX_LOG_DEBUG_HTTP, r->connection->log, 0,
                    newline ? "lua say response" : "lua print response");
 
+    ctx->ngx_say_no_buffer = 1;
     rc = ngx_http_lua_send_chain_link(r, ctx, cl);
+    ctx->ngx_say_no_buffer = 0;
 
     if (rc == NGX_ERROR || rc >= NGX_HTTP_SPECIAL_RESPONSE) {
         lua_pushnil(L);
